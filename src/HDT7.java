@@ -31,10 +31,6 @@ public class HDT7 {
         Diccionario dicc;
         int num = 1;
         ArrayList<Association<String, String>> arrayAs = new ArrayList<>();
-      
-        //, Dog,Homework,Woman, Town, Yes; 
-        BinaryTree<Association> diccP = new BinaryTree<>();
-        BinaryTree<Association> diccS = new BinaryTree<>();
         int char_a_string;
         
         //SE LEE EL ARCHIVO
@@ -51,8 +47,6 @@ public class HDT7 {
                 in = in.replace("(","");
                 String es=p1[1];
                 es = es.replace(")","");
-                a.add(in);
-                b.add(es);
                 Association h=new Association (in, es);
                 arrayAs.add(h);
             }

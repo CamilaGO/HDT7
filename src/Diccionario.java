@@ -1,21 +1,28 @@
 
 import java.util.ArrayList;
-import java.util.HashSet;
 
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Universidad del Valle de Guatemala
+ * Camila Gonzalez 18398
+ * Maria Ines Vasquez Figueroa 18250
+ *clase diccionario que facilita su lectura y guardar las asociaciones de palabras
+ *Documentacion consultada: http://javacodebasics.blogspot.com/2013/03/arboles-en-java-recorrido-preorden.html
+ *https://serprogramador.es/programar-arboles-binarios-parte-1-introduccionclasesagregar-nodo/
  */
 
 /**
  *
- * @author Camila
+ * @author Camila.Maria
  */
 public class Diccionario {
-    BinaryTree<Association<String, String>> raiz;
+    BinaryTree<Association<String, String>> raiz;//raiz padre de todo el arbol genealogico
     
     //constructor para crear el arbol
+
+    /**
+     *constructor de diccionario que guarda todas las asociaciones del .txt que se lee en el main
+     * @param arrayAs array de cada asociacion del txt
+     */
     public Diccionario(ArrayList<Association<String, String>> arrayAs){
         raiz = new BinaryTree<Association<String, String>>(null, null, null,null);
         raiz.setValue(arrayAs.get(0)); //Se añade el primer valor como papa
@@ -25,7 +32,12 @@ public class Diccionario {
             System.out.print("\n"+arrayAs.get(i));
         }
     }
-    
+
+    /**
+     *agrega a una asociacion al arbol binario al compararlo con su raiz para asi colocarlo en su debida posicion
+     * @param viejo raiz del arbol
+     * @param nuevo asociacion que desea agregar
+     */
     public void addAss(BinaryTree<Association<String, String>> viejo, Association<String, String> nuevo){
         //Se obtiene el valor del BTS a modificar y los keys
         Association<String,String> asoc = viejo.value();
@@ -50,8 +62,14 @@ public class Diccionario {
             addAss(viejo.right(), nuevo);
         }
     }
-    
-    //Busca palabra en el arbol 
+    // 
+
+    /**
+     *Busca palabra en el arbol genealogico para hayar su traduccion a espanol
+     * @param bts nodo con asociacion
+     * @param palabra palabra que esta buscando
+     * @return traduccion a espanol
+     */
     public String traduccion(BinaryTree<Association<String,String>> bts, String palabra){
         String wTrad = "";
 	Association<String,String> asociacion= bts.value();
@@ -77,10 +95,12 @@ public class Diccionario {
 	}
 	return wTrad;
     }
-    
+
+    /**
+     *getter de raiz del arbol
+     * @return raiz
+     */
     public BinaryTree<Association<String, String>> getRaiz(){
         return raiz;
     }
-    
-    //
 }
