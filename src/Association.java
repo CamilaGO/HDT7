@@ -10,24 +10,47 @@
  */
 public class Association <K,V>  {
     
-     private K clave ;
-    private V valor;
+    private K key ;
+    private V value;
     
     public Association (K clave, V valor){
-        this.clave=clave;
-        this.valor=valor;
-        
+        this.key=clave;
+        this.value=valor;
     }
+    
     public String toString(){
-        return "Ingles: "+clave+"-> Español: "+valor;
+        return "Ingles: "+key+"-> Español: "+value;
     }
-    public K getClave(){
-        return clave;
+    
+    public K getKey(){
+        return key;
     }
 
-    public V getValor(){
-        return valor;
+    public V getValue(){
+        return value;
     }
+    
+    public boolean comparar(Object otro)
+    {
+        Association otroAsso = (Association)otro;
+        boolean resul = getKey().equals(otroAsso.getKey());
+        return resul;
+    }
+    
+    public int hashCode()
+    {
+        return getKey().hashCode();
+    }
+    
+      public V setValue(V valor)
+    {
+        V oldValue = value;
+        this.value = valor;
+        return oldValue;
+    }
+      
+      
+    
     
     
 }

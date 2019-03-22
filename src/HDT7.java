@@ -28,13 +28,10 @@ public class HDT7 {
         ArrayList<String> a = new ArrayList<>(), b = new ArrayList<>();
         String linea = "";
         String str= "                      "; 
+        Diccionario dicc;
         int num = 1;
-        BinaryTree House=new BinaryTree();
-        BinaryTree Dog=new BinaryTree();
-        BinaryTree Homework=new BinaryTree();
-        BinaryTree Woman=new BinaryTree();
-        BinaryTree Town=new BinaryTree();
-        BinaryTree Yes=new BinaryTree();
+        ArrayList<Association<String, String>> arrayAs = new ArrayList<>();
+      
         //, Dog,Homework,Woman, Town, Yes; 
         BinaryTree<Association> diccP = new BinaryTree<>();
         BinaryTree<Association> diccS = new BinaryTree<>();
@@ -44,7 +41,6 @@ public class HDT7 {
         try {
             FileReader lector = new FileReader("diccionario.txt");
             BufferedReader buff = new BufferedReader(lector);
-            ArrayList<Association> c = new ArrayList<>();
             while ((linea = buff.readLine()) != null){
             
             arr.add(linea);
@@ -58,97 +54,29 @@ public class HDT7 {
                 a.add(in);
                 b.add(es);
                 Association h=new Association (in, es);
-                c.add(h);
-                System.out.println(c);
-            //creador de binary tree para house
-            if (num==1){
-                //split de cada linea
-               
-                //creacion de asociacion de palabras en ingles y español
-                
-                //se crea el binary tree con esta asociacion que prontamente será relacionado
-                diccP = new BinaryTree<Association>(h, h);
-                //System.out.println(h);
+                arrayAs.add(h);
             }
-            else{
-                diccS=new BinaryTree<Association>(h, h);
-                diccP.addNodo(diccS);
-            }
-            //creador de binary tree para dog
-            /*if (num==2){
-                
-                
-                Association d=new Association (in, es);
-                Dog = new BinaryTree<Association>(d, d);
-                System.out.println(d);
-            
-            
-            
-            }//creador de binary tree para homework
-            if (num==3){
-               
-                
-                Association hw=new Association (in, es);
-                Homework = new BinaryTree<Association>(hw, hw);
-                System.out.println(hw);
-            
-            }
-            //creador de binary tree para woman
-            if (num==4){
-                
-                Association w=new Association (in, es);
-                Woman = new BinaryTree<Association>(w, w);
-                System.out.println(w);
-            }
-            
-            //creador de binary tree para town
-            if (num==5){
-            
-                Association t=new Association (in, es);
-                Town = new BinaryTree<Association>(t,t);
-                System.out.println(t);
-            }
-            //creador de binary tree para yes
-            if (num==6){
-            
-                Association y=new Association (in, es);
-                Yes = new BinaryTree<Association>(y,y);
-                System.out.println(y);
-            
-            }*/
-            num++;
-            
-            }
-            //creacion de relaciones entre palabras
-            /*House.setIzq(Dog);
-            House.setDer(Woman);
-            Dog.setDer(Homework);
-            Woman.setIzq(Town);
-            Woman.setDer(Yes);*/
             buff.close();
         }catch (IOException ex){ 
             System.out.println("ERROR");
         }
+        
+        dicc = new Diccionario(arrayAs);
         //SE LEE ARCHIVO A TRADUCIR
         try {
             FileReader lect = new FileReader("texto.txt");
             BufferedReader bf = new BufferedReader(lect);
-            String trad = "";
+            String concatenador = "";
             while ((linea = bf.readLine()) != null){
            
             //split de cada linea
                 String [] texto =linea.split(" ");
                 for(int n=0;n<texto.length;n++){
                     String palabra = texto[n];
-                    if (a.contains(palabra)){
-                        int pos = a.indexOf(palabra);
-                        String esp = b.get(pos);
-                        trad += " "+esp+" ";
-                    }else{
-                        trad += " *"+palabra+"* ";
-                    }
+                    String trd = dicc.traduccion(dicc.getRaiz(), palabra);
+                    concatenador += " " + trd + " ";
                 }
-                System.out.print("\n"+trad);
+                System.out.print("\n"+concatenador);
             }
             bf.close();
         }catch (IOException ex){ 
