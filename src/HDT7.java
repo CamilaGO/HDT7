@@ -11,6 +11,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  *
@@ -24,6 +25,7 @@ public class HDT7 {
     public static void main(String[] args) {
         // VARIABLES Y OBJETOS
         ArrayList arr = new ArrayList();
+        ArrayList<String> a = new ArrayList<>(), b = new ArrayList<>();
         String linea = "";
         String str= "                      "; 
         int num = 1;
@@ -42,6 +44,7 @@ public class HDT7 {
         try {
             FileReader lector = new FileReader("diccionario.txt");
             BufferedReader buff = new BufferedReader(lector);
+            ArrayList<Association> c = new ArrayList<>();
             while ((linea = buff.readLine()) != null){
             
             arr.add(linea);
@@ -52,8 +55,11 @@ public class HDT7 {
                 in = in.replace("(","");
                 String es=p1[1];
                 es = es.replace(")","");
+                a.add(in);
+                b.add(es);
                 Association h=new Association (in, es);
-                System.out.println(h);
+                c.add(h);
+                System.out.println(c);
             //creador de binary tree para house
             if (num==1){
                 //split de cada linea
@@ -62,7 +68,7 @@ public class HDT7 {
                 
                 //se crea el binary tree con esta asociacion que prontamente será relacionado
                 diccP = new BinaryTree<Association>(h, h);
-                System.out.println(h);
+                //System.out.println(h);
             }
             else{
                 diccS=new BinaryTree<Association>(h, h);
@@ -120,6 +126,31 @@ public class HDT7 {
             Woman.setIzq(Town);
             Woman.setDer(Yes);*/
             buff.close();
+        }catch (IOException ex){ 
+            System.out.println("ERROR");
+        }
+        //SE LEE ARCHIVO A TRADUCIR
+        try {
+            FileReader lect = new FileReader("texto.txt");
+            BufferedReader bf = new BufferedReader(lect);
+            String trad = "";
+            while ((linea = bf.readLine()) != null){
+           
+            //split de cada linea
+                String [] texto =linea.split(" ");
+                for(int n=0;n<texto.length;n++){
+                    String palabra = texto[n];
+                    if (a.contains(palabra)){
+                        int pos = a.indexOf(palabra);
+                        String esp = b.get(pos);
+                        trad += " "+esp+" ";
+                    }else{
+                        trad += " *"+palabra+"* ";
+                    }
+                }
+                System.out.print("\n"+trad);
+            }
+            bf.close();
         }catch (IOException ex){ 
             System.out.println("ERROR");
         }
